@@ -7107,7 +7107,7 @@ DefinitionBlock ("", "DSDT", 2, "DELL  ", "CBX3   ", 0x00000021)
 
     Method (_PTS, 1, NotSerialized)  // _PTS: Prepare To Sleep
     {
-        If (CondRefOf(\_SB_.PCI0.PEG0.VID._ON)) { \_SB_.PCI0.PEG0.VID._ON() }
+        If (CondRefOf(\_SB_.PCI0.PEG0.VID._OFF)) { \_SB_.PCI0.PEG0.VID._OFF() }
 Store (Zero, P80D)
         P8XH (Zero, Arg0)
         PTS (Arg0)
@@ -12108,6 +12108,5 @@ Store (0x07D0, OSYS)
         \_SB.SOS4 (Arg0, Arg1)
     }
     External(\_SB_.PCI0.PEG0.VID._OFF, MethodObj)
-    External(\_SB_.PCI0.PEG0.VID._ON, MethodObj)
 }
 

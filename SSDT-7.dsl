@@ -1458,7 +1458,7 @@ DefinitionBlock ("", "SSDT", 1, "NvdRef", "NvdTabl", 0x00001000)
         {
             If (DGOS)
             {
-                _ON ()
+                _OFF ()
                 Store (Zero, DGOS)
                 Store (Zero, MLTF)
             }
