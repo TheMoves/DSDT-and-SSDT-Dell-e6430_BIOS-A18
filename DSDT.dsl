@@ -4869,10 +4869,8 @@ DefinitionBlock ("", "DSDT", 2, "DELL  ", "CBX3   ", 0x00000021)
         Device (GLAN)
         {
             Name (_ADR, 0x00190000)  // _ADR: Address
-            Method (_PRW, 0, NotSerialized)  // _PRW: Power Resources for Wake
-            {
-                Return (GPRW (0x0D, 0x04))
-            }
+            Name(_PRW, Package() { 0x0D, 0 })
+            
         }
 
         Device (EHC1)
@@ -5357,6 +5355,21 @@ DefinitionBlock ("", "DSDT", 2, "DELL  ", "CBX3   ", 0x00000021)
                     }
                 }
             }
+            Name(_PRW, Package() { 0x0D, 0 })
+            Method (_DSM, 4, NotSerialized)
+            {
+                If (LEqual (Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
+                Return (Package()
+                {
+                    "subsystem-id", Buffer() { 0x70, 0x72, 0x00, 0x00 },
+                    "subsystem-vendor-id", Buffer() { 0x86, 0x80, 0x00, 0x00 },
+                    "AAPL,current-available", 2100,
+                    "AAPL,current-extra", 2200,
+                    "AAPL,current-extra-in-sleep", 1600,
+                    "AAPL,device-internal", 0x02,
+                    "AAPL,max-port-current-in-sleep", 2100,
+                })
+            }
         }
 
         Device (EHC2)
@@ -5699,6 +5712,21 @@ DefinitionBlock ("", "DSDT", 2, "DELL  ", "CBX3   ", 0x00000021)
                         }
                     }
                 }
+            }
+            Name(_PRW, Package() { 0x0D, 0 })
+            Method (_DSM, 4, NotSerialized)
+            {
+                If (LEqual (Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
+                Return (Package()
+                {
+                    "subsystem-id", Buffer() { 0x70, 0x72, 0x00, 0x00 },
+                    "subsystem-vendor-id", Buffer() { 0x86, 0x80, 0x00, 0x00 },
+                    "AAPL,current-available", 2100,
+                    "AAPL,current-extra", 2200,
+                    "AAPL,current-extra-in-sleep", 1600,
+                    "AAPL,device-internal", 0x02,
+                    "AAPL,max-port-current-in-sleep", 2100,
+                })
             }
         }
 
@@ -6132,6 +6160,21 @@ DefinitionBlock ("", "DSDT", 2, "DELL  ", "CBX3   ", 0x00000021)
                     }
                 }
             }
+            Name(_PRW, Package() { 0x0D, 0 })
+            Method (_DSM, 4, NotSerialized)
+            {
+                If (LEqual (Arg2, Zero)) { Return (Buffer() { 0x03 } ) }
+                Return (Package()
+                {
+                    "subsystem-id", Buffer() { 0x70, 0x72, 0x00, 0x00 },
+                    "subsystem-vendor-id", Buffer() { 0x86, 0x80, 0x00, 0x00 },
+                    "AAPL,current-available", 2100,
+                    "AAPL,current-extra", 2200,
+                    "AAPL,current-extra-in-sleep", 1600,
+                    "AAPL,device-internal", 0x02,
+                    "AAPL,max-port-current-in-sleep", 2100,
+                })
+            }
         }
 
         Device (HDEF)
@@ -6149,11 +6192,9 @@ DefinitionBlock ("", "DSDT", 2, "DELL  ", "CBX3   ", 0x00000021)
                     ,   15, 
                 PMES,   1
             }
+            Name(_PRW, Package() { 0x0D, 0 })
 
-            Method (_PRW, 0, NotSerialized)  // _PRW: Power Resources for Wake
-            {
-                Return (GPRW (0x0D, 0x04))
-            }
+            
         }
 
         Device (SAT0)
@@ -11766,95 +11807,17 @@ Store (0x07D0, OSYS)
 
     Scope (_SB.PCI0.EHC1)
     {
-        Method (_PRW, 0, NotSerialized)  // _PRW: Power Resources for Wake
-        {
-            Store (UPRW (), Local0)
-            If (LEqual (Local0, 0x03))
-            {
-                Return (Package (0x02)
-                {
-                    0x0D, 
-                    0x03
-                })
-            }
-
-            If (LEqual (Local0, One))
-            {
-                Return (Package (0x02)
-                {
-                    0x0D, 
-                    One
-                })
-            }
-
-            Return (Package (0x02)
-            {
-                0x0D, 
-                Zero
-            })
-        }
+        
     }
 
     Scope (_SB.PCI0.EHC2)
     {
-        Method (_PRW, 0, NotSerialized)  // _PRW: Power Resources for Wake
-        {
-            Store (UPRW (), Local0)
-            If (LEqual (Local0, 0x03))
-            {
-                Return (Package (0x02)
-                {
-                    0x0D, 
-                    0x03
-                })
-            }
-
-            If (LEqual (Local0, One))
-            {
-                Return (Package (0x02)
-                {
-                    0x0D, 
-                    One
-                })
-            }
-
-            Return (Package (0x02)
-            {
-                0x0D, 
-                Zero
-            })
-        }
+        
     }
 
     Scope (_SB.PCI0.XHC)
     {
-        Method (_PRW, 0, NotSerialized)  // _PRW: Power Resources for Wake
-        {
-            Store (UPRW (), Local0)
-            If (LEqual (Local0, 0x03))
-            {
-                Return (Package (0x02)
-                {
-                    0x0D, 
-                    0x04
-                })
-            }
-
-            If (LEqual (Local0, One))
-            {
-                Return (Package (0x02)
-                {
-                    0x0D, 
-                    One
-                })
-            }
-
-            Return (Package (0x02)
-            {
-                0x0D, 
-                Zero
-            })
-        }
+        
     }
 
     Scope (_SB.PCI0.SAT0)
